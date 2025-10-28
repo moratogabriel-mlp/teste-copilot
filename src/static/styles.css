@@ -74,6 +74,43 @@ section h3 {
   margin-bottom: 8px;
 }
 
+/* Participants list inside activity card */
+.participants {
+  margin-top: 12px;
+  padding-top: 10px;
+  border-top: 1px dashed #eee;
+}
+.participants-header {
+  font-weight: 700;
+  color: #333;
+  margin-bottom: 8px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.participants-header .count {
+  font-weight: 600;
+  color: #0066cc;
+  font-size: 0.95rem;
+}
+.participants-list {
+  list-style: disc;
+  margin-left: 18px;
+  margin-bottom: 0;
+}
+.participants-list li {
+  margin-bottom: 6px;
+  color: #555;
+  font-size: 14px;
+  background: linear-gradient(90deg, rgba(255,255,255,0.0), rgba(0,0,0,0.0));
+  padding: 3px 6px;
+  border-radius: 4px;
+}
+.participants-list li.no-participants {
+  font-style: italic;
+  color: #999;
+}
+
 .form-group {
   margin-bottom: 15px;
 }
