@@ -5,7 +5,7 @@ A super simple FastAPI application that allows students to view and sign up
 for extracurricular activities at Mergington High School.
 """
 
-from fastapi import FastAPI, HTTPException
+from fastapi import FastAPI, HTTPException, status
 from fastapi.staticfiles import StaticFiles
 from fastapi.responses import RedirectResponse
 import os
@@ -19,7 +19,7 @@ current_dir = Path(__file__).parent
 app.mount("/static", StaticFiles(directory=os.path.join(Path(__file__).parent,
           "static")), name="static")
 
-# In-memory activity database
+ # In-memory activity database
 activities = {
     "Chess Club": {
         "description": "Learn strategies and compete in chess tournaments",
@@ -69,6 +69,7 @@ activities = {
         "max_participants": 25,
         "participants": ["ava@mergington.edu", "noah@mergington.edu"]
     },
+
     "Debate Team": {
         "description": "Prepare for and compete in debate tournaments",
         "schedule": "Mondays, 4:00 PM - 5:30 PM",
@@ -76,6 +77,18 @@ activities = {
         "participants": ["sophia.b@mergington.edu", "mason@mergington.edu"]
     }
 }
+
+# Endpoint para remover participante de uma atividade
+@app.delete("/activities/{activity_name}/participants/{email}", status_code=status.HTTP_204_NO_CONTENT)
+def remove_participant(activity_name: str, email: str):
+    """Remove a participant from an activity"""
+    if activity_name not in activities:
+        raise HTTPException(status_code=404, detail="Activity not found")
+    activity = activities[activity_name]
+    if email not in activity["participants"]:
+        raise HTTPException(status_code=404, detail="Participant not found in this activity")
+    activity["participants"].remove(email)
+    return
 
 
 @app.get("/")
